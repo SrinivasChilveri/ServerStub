@@ -3,6 +3,10 @@ package test
 import "github.com/golang/protobuf/proto"
 import "fmt"
 
+type Testobj struct {
+	data int32
+	Name string
+}
 /**
  *  This is a test comment on func1
  **/

@@ -6,18 +6,19 @@ import "github.com/golang/protobuf/proto"
  *  This is a test comment on testobj 
  *  
  **/
-type Testobj struct {
-  Oid uint64
+type TestobjStub struct {
+  Oid uint64 
+  so Testobj 
 }
 
 /**
  *  This is a test comment on func1  
  **/
-func (Obj Testobj) Func1_Wrap(inParams  [] byte) (outParams  [] byte) {
+func (Obj TestobjStub) Func1(inParams  [] byte) (outParams  [] byte) {
   InPutStruct := &Msg1{} ; 
   _ = proto.Unmarshal(inParams, InPutStruct)
   OutPutStruct := &Msg2{} ; 
-  OutPutStruct.Liststring, OutPutStruct.Idtostringmap =  Obj.Func1(InPutStruct.Name , InPutStruct.Id , InPutStruct.Floatingvalue )
+  OutPutStruct.Liststring, OutPutStruct.Idtostringmap =  Obj.so.Func1(InPutStruct.Name , InPutStruct.Id , InPutStruct.Floatingvalue )
   outParams, _ = proto.Marshal(OutPutStruct)
 
   return 
@@ -28,11 +29,11 @@ func (Obj Testobj) Func1_Wrap(inParams  [] byte) (outParams  [] byte) {
  *  Comment on func2 
  *  
  **/
-func (Obj Testobj) Func2_Wrap(inParams  [] byte) (outParams  [] byte) {
+func (Obj TestobjStub) Func2(inParams  [] byte) (outParams  [] byte) {
   InPutStruct := &Msg2{} ; 
   _ = proto.Unmarshal(inParams, InPutStruct)
   OutPutStruct := &Msg3{} ; 
-  OutPutStruct.Nested =  Obj.Func2(InPutStruct.Liststring , InPutStruct.Idtostringmap )
+  OutPutStruct.Nested =  Obj.so.Func2(InPutStruct.Liststring , InPutStruct.Idtostringmap )
   outParams, _ = proto.Marshal(OutPutStruct)
 
   return 
@@ -42,11 +43,11 @@ func (Obj Testobj) Func2_Wrap(inParams  [] byte) (outParams  [] byte) {
  *  This is a different test 
  * comment on func3  
  **/
-func (Obj Testobj) Func3_Wrap(inParams  [] byte) (outParams  [] byte) {
+func (Obj TestobjStub) Func3(inParams  [] byte) (outParams  [] byte) {
   InPutStruct := &Msg3{} ; 
   _ = proto.Unmarshal(inParams, InPutStruct)
   OutPutStruct := &Msg1{} ; 
-  OutPutStruct.Name, OutPutStruct.Id, OutPutStruct.Floatingvalue =  Obj.Func3(InPutStruct.Nested )
+  OutPutStruct.Name, OutPutStruct.Id, OutPutStruct.Floatingvalue =  Obj.so.Func3(InPutStruct.Nested )
   outParams, _ = proto.Marshal(OutPutStruct)
 
   return 
@@ -56,11 +57,11 @@ func (Obj Testobj) Func3_Wrap(inParams  [] byte) (outParams  [] byte) {
  *  This is a different test 
  * comment on func4  
  **/
-func (Obj Testobj) Func4_Wrap(inParams  [] byte) (outParams  [] byte) {
+func (Obj TestobjStub) Func4(inParams  [] byte) (outParams  [] byte) {
   InPutStruct := &Msg4{} ; 
   _ = proto.Unmarshal(inParams, InPutStruct)
   OutPutStruct := &Msg4{} ; 
-  OutPutStruct.Params =  Obj.Func4(InPutStruct.Params )
+  OutPutStruct.Params =  Obj.so.Func4(InPutStruct.Params )
   outParams, _ = proto.Marshal(OutPutStruct)
 
   return 

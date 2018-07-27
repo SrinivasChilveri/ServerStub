@@ -2,7 +2,7 @@
 
 package main
 
-import "CodeGenTest/test"
+import "CodeGenTestServer/test"
 import "github.com/golang/protobuf/proto"
 import (
 	//"github.com/golang/protobuf/proto"
@@ -17,7 +17,7 @@ import (
 
 func main() {
 	fmt.Printf("Hello\n")
-	t := test.Testobj {Oid: 4}
+	t := test.TestobjStub {Oid: 4}
 
 	msg := &test.Msg1{
 		Name: "abccc",
@@ -28,6 +28,6 @@ func main() {
 
 	fmt.Println("proto.Marshal",msgbuffer)
 
- a := t.Func1_Wrap(msgbuffer)
+ a := t.Func1(msgbuffer)
   fmt.Println("output",a)
 }

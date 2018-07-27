@@ -15,15 +15,15 @@ protoc --go_out=gooutputserver test.proto && \
 protoc --go_sapphire_server_out=gooutputserver test.proto && \
 
 #place in gopath so we can run
-mkdir -p $GOPATH/src/CodeGenTest/test && \
-mkdir -p $GOPATH/src/CodeGenTest/main && \
-cp gooutputserver/test.pb.go $GOPATH/src/CodeGenTest/test && \
-cp gooutputserver/SapphireServerStubtest.pb.go $GOPATH/src/CodeGenTest/test && \
-cp gooutputserver/test.go $GOPATH/src/CodeGenTest/main && \
-cp gooutputserver/sapphireobject.go $GOPATH/src/CodeGenTest/test && \
+mkdir -p $GOPATH/src/CodeGenTestServer/test && \
+mkdir -p $GOPATH/src/CodeGenTestServer/main && \
+cp gooutputserver/test.pb.go $GOPATH/src/CodeGenTestServer/test && \
+cp gooutputserver/SapphireServerStubtest.pb.go $GOPATH/src/CodeGenTestServer/test && \
+cp gooutputserver/test.go $GOPATH/src/CodeGenTestServer/main && \
+cp gooutputserver/sapphireobject.go $GOPATH/src/CodeGenTestServer/test && \
 
 #build and run go application
-go install CodeGenTest/main && \
+go install CodeGenTestServer/main && \
 $GOPATH/bin/main
 
 echo "done"

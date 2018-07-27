@@ -105,7 +105,7 @@ void GenerateMethod(Printer* out, const MethodDescriptor* method) {
   if(method->GetSourceLocation(&sl)) {
     GenerateComments(sl.leading_comments, out);
   }
-  out->Print(methodDict, "func (Obj $name$) $method$_Wrap(");
+  out->Print(methodDict, "func (Obj $name$Stub) $method$(");
 
   // Function Header
   methodDict["argname"] = "inParams";
@@ -154,7 +154,7 @@ void GenerateMethod(Printer* out, const MethodDescriptor* method) {
 
   //methodDict["name"] = method->service()->name();
   methodDict["method"] = capitalizeFirst(method->name());
-  out->Print(methodDict, " Obj.$method$(");
+  out->Print(methodDict, " Obj.so.$method$(");
 
   for(int i = 0; i < args->field_count(); ++i) {
     const FieldDescriptor* d = args->field(i);
@@ -198,9 +198,13 @@ void GoSapphireServerGenerator::GenerateSapphireStubs(GeneratorContext* context,
 
     // Type Definition
     typedict["name"] = capitalizeFirst(service->name());
-    out->Print(typedict, "type $name$ struct {\n");
+    out->Print(typedict, "type $name$Stub struct {\n");
     out->Indent();
-    out->Print("Oid uint64\n");
+    out->Print("Oid uint64 \n");
+    out->Print(typedict, "so $name$ \n");
+   // out->Print("so $name$ \n");
+
+
     out->Outdent();
     out->Print("}\n\n");
 
