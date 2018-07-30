@@ -123,17 +123,26 @@ void GenerateMethod(Printer* out, const MethodDescriptor* method) {
   // Function Body
   out->Indent();
 
+  out->Print("var err error");
+  out->Print("\n");
   auto args = method->input_type();
   methodDict["argmsg"] = capitalizeFirst(args->name());
-  out->Print(methodDict, "InPutStruct := &$argmsg${} ; ");
+  out->Print(methodDict, "InPutStruct := &$argmsg${}");
   out->Print("\n");
   //TODO check err
-  out->Print("_ = proto.Unmarshal(inParams, InPutStruct)\n");
 
+  out->Print("err = proto.Unmarshal(inParams, InPutStruct)\n");
+
+  out->Print("if err != nil  {\n");
+
+  out->Indent();
+  out->Print("return\n");
+  out->Outdent();
+  out->Print("}\n");
 
   auto ret = method->output_type();
   methodDict["argmsg"] = capitalizeFirst(ret->name());
-  out->Print(methodDict, "OutPutStruct := &$argmsg${} ; ");
+  out->Print(methodDict, "OutPutStruct := &$argmsg${}");
   out->Print("\n");
 
   for(int i = 0; i < ret->field_count(); ++i) {
@@ -160,9 +169,9 @@ void GenerateMethod(Printer* out, const MethodDescriptor* method) {
   out->Print("\n");
 
   //TODO check err
-  out->Print("outParams, _ = proto.Marshal(OutPutStruct)\n\n");
+  out->Print("outParams, err = proto.Marshal(OutPutStruct)\n\n");
 
-  out->Print("return ");
+  out->Print("return");
 
 
   out->Print("\n");
