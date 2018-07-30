@@ -124,35 +124,29 @@ void GenerateMethod(Printer* out, const MethodDescriptor* method) {
   out->Indent();
 
   auto args = method->input_type();
-
-
   methodDict["argmsg"] = capitalizeFirst(args->name());
   out->Print(methodDict, "InPutStruct := &$argmsg${} ; ");
-  //out->Indent();
   out->Print("\n");
+  //TODO check err
   out->Print("_ = proto.Unmarshal(inParams, InPutStruct)\n");
 
 
   auto ret = method->output_type();
-
   methodDict["argmsg"] = capitalizeFirst(ret->name());
   out->Print(methodDict, "OutPutStruct := &$argmsg${} ; ");
- // out->Indent();
   out->Print("\n");
 
   for(int i = 0; i < ret->field_count(); ++i) {
       const FieldDescriptor* d = ret->field(i);
-      //methoddict["type"] = GetGoType(d);
       methodDict["argname"] = capitalizeFirst(d->name());
   	  methodDict["comma"] = (i == ret->field_count() - 1) ? "" : ", ";
       out->Print(methodDict, "OutPutStruct.$argname$$comma$");
   }
-  //out->Indent();
+
   out->Print(" = ");
 
   //call actual function
 
-  //methodDict["name"] = method->service()->name();
   methodDict["method"] = capitalizeFirst(method->name());
   out->Print(methodDict, " Obj.so.$method$(");
 
@@ -202,11 +196,34 @@ void GoSapphireServerGenerator::GenerateSapphireStubs(GeneratorContext* context,
     out->Indent();
     out->Print("Oid uint64 \n");
     out->Print(typedict, "so $name$ \n");
-   // out->Print("so $name$ \n");
 
 
     out->Outdent();
     out->Print("}\n\n");
+
+    //CreateSapphireObjectStub function start
+
+    StringMap methodDict;
+
+    methodDict["method"] = "CreateSapphireStubObject";
+    out->Print(methodDict, "func  $method$(");
+    out->Print(") (");
+    out->Print( "outParam  interface {}");
+    out->Print(") {\n");
+
+    // Function Body
+    out->Indent();
+    typedict["name"] = capitalizeFirst(service->name());
+    out->Print(typedict, "var stubObj $name$Stub");
+
+    out->Print("\n");
+    out->Print("return &stubObj");
+
+    out->Print("\n");
+    out->Outdent();
+    out->Print("}\n\n");
+
+    //Create function end
 
     // Each method implementation
     for(int j = 0; j < service->method_count(); ++j) {

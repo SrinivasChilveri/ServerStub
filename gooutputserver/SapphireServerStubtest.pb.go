@@ -11,6 +11,11 @@ type TestobjStub struct {
   so Testobj 
 }
 
+func  CreateSapphireStubObject() (outParam  interface {}) {
+  var stubObj TestobjStub
+  return &stubObj
+}
+
 /**
  *  This is a test comment on func1  
  **/
