@@ -234,6 +234,28 @@ void GoSapphireServerGenerator::GenerateSapphireStubs(GeneratorContext* context,
 
     //Create function end
 
+
+    //healthCheck function start
+
+    //TODO - need to update on what basis we can return the status
+
+    methodDict["method"] = "GetSapphireObjectStatus";
+    out->Print(methodDict, "func  $method$(");
+    //out->Print(methodDict, "func  $method$(sid string");
+    out->Print(") (");
+    out->Print( "outParam  bool");
+    out->Print(") {\n");
+
+    out->Indent();
+    out->Print("\n");
+    out->Print("return true");
+
+    out->Print("\n");
+    out->Outdent();
+    out->Print("}\n\n");
+
+    //healthCheck function end
+
     // Each method implementation
     for(int j = 0; j < service->method_count(); ++j) {
       GenerateMethod(out, service->method(j));

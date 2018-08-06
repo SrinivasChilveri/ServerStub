@@ -16,6 +16,11 @@ func  CreateSapphireStubObject() (outParam  interface {}) {
   return &stubObj
 }
 
+func  GetSapphireObjectStatus() (outParam  bool) {
+
+  return true
+}
+
 /**
  *  This is a test comment on func1  
  **/
